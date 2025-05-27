@@ -213,6 +213,213 @@
                 opacity: 0;
             }
         }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-window {
+            width: 380px;
+            height: 500px;
+            max-height: 80vh;
+            background: var(--surface-200);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        .message.bot {
+            background: var(--surface-300);
+            color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 6px;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+        }
+
+        .chat-input-container {
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface-100);
+        }
+
+        .chat-input {
+            width: 100%;
+            background: var(--surface-200);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 12px 45px 12px 16px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .send-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-button:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            border: none;
+            box-shadow: 
+                0 8px 25px rgba(99, 102, 241, 0.4),
+                0 0 20px rgba(139, 92, 246, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: chatPulse 2s ease-in-out infinite;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 12px 35px rgba(99, 102, 241, 0.6),
+                0 0 30px rgba(139, 92, 246, 0.5);
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes chatPulse {
+            0%, 100% {
+                box-shadow: 
+                    0 8px 25px rgba(99, 102, 241, 0.4),
+                    0 0 20px rgba(139, 92, 246, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 8px 25px rgba(99, 102, 241, 0.6),
+                    0 0 30px rgba(139, 92, 246, 0.5);
+            }
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 16px;
+            background: var(--surface-300);
+            border-radius: 18px;
+            border-bottom-left-radius: 6px;
+            align-self: flex-start;
+            max-width: 80px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            animation: typingBounce 1.4s ease-in-out infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 100px);
+                bottom: 80px;
+                right: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -702,12 +909,32 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div>
-                    <h3 class="text-2xl font-extrabold text-white mb-4">Ahlane.</h3>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center morphing-blob">
+                            <span class="text-white font-bold">A</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold gradient-text">Ahlane</h3>
+                    </div>
                     <p class="text-gray-400 text-sm mb-4">Your trusted partner for an exceptional international student experience in Morocco.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors"><span class="sr-only">Facebook</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg></a>
-                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors"><span class="sr-only">Instagram</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg></a>
-                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors"><span class="sr-only">Twitter</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
 
@@ -746,6 +973,147 @@
         </div>
     </footer>
 
-    <!-- Mobile menu and scroll JavaScript is handled by Alpine.js -->
+    <!-- Alpine.js Particle System -->
+    <script>
+        function particles() {
+            return {
+                particleList: [],
+                init() {
+                    this.createParticles();
+                },
+                createParticles() {
+                    for (let i = 0; i < 50; i++) {
+                        this.particleList.push({
+                            id: i,
+                            x: Math.random() * window.innerWidth,
+                            size: Math.random() * 4 + 2,
+                            delay: Math.random() * 20,
+                            duration: Math.random() * 10 + 15
+                        });
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Add this JavaScript before the closing </body> tag -->
+    <script>
+        function chatbot() {
+            return {
+                isOpen: false,
+                isTyping: false,
+                currentMessage: '',
+                messageId: 0,
+                messages: [
+                    {
+                        id: 0,
+                        type: 'bot',
+                        text: 'Hi! 👋 I\'m your Ahlane AI assistant. I can help you with housing, buddy matching, visas, and everything about studying in Morocco!'
+                    }
+                ],
+
+                // Predefined responses
+                responses: {
+                    'housing': 'Our AI-verified housing service matches you with safe, affordable accommodations near your university. We have partnerships with 500+ verified landlords across Morocco. Would you like to know about specific cities?',
+                    
+                    'buddy': 'Our Smart Buddy System uses personality matching to connect you with local students. Your buddy will help with language, culture, and making friends. The matching process takes 24-48 hours.',
+                    
+                    'visa': 'I can help with visa applications! Morocco requires a student visa for stays over 90 days. You\'ll need: passport, acceptance letter, financial proof, and health certificate. Our team provides 24/7 visa support.',
+                    
+                    'universities': 'We support 50+ universities across Morocco including Mohammed V University, Al Akhawayn, INSEA, and more. Which city or field of study interests you?',
+                    
+                    'cost': 'Average costs: Housing 2000-5000 MAD/month, Food 1500-3000 MAD/month, Transport 200-500 MAD/month. Total budget: 5000-10000 MAD/month depending on lifestyle.',
+                    
+                    'language': 'Arabic and French are main languages. Many universities offer programs in English. We provide language support and can connect you with local language exchange partners.',
+                    
+                    'default': 'That\'s a great question! For detailed information about studying in Morocco, housing, visas, or our buddy system, I recommend speaking with our human experts. You can also explore our features above or start your journey with us!'
+                },
+
+                init() {
+                    // Auto-open chat for first-time visitors (optional)
+                    setTimeout(() => {
+                        if (!localStorage.getItem('ahlane_chat_visited')) {
+                            this.isOpen = true;
+                            localStorage.setItem('ahlane_chat_visited', 'true');
+                        }
+                    }, 3000);
+                },
+
+                toggleChat() {
+                    this.isOpen = !this.isOpen;
+                    if (this.isOpen) {
+                        this.$nextTick(() => {
+                          this.scrollToBottom();
+                        });
+                    }
+                },
+
+                async sendMessage() {
+                    if (!this.currentMessage.trim() || this.isTyping) return;
+
+                    const userMessage = {
+                        id: ++this.messageId,
+                        type: 'user',
+                        text: this.currentMessage
+                    };
+
+                    this.messages.push(userMessage);
+                    const userInput = this.currentMessage.toLowerCase();
+                    this.currentMessage = '';
+                    
+                    this.scrollToBottom();
+                    
+                    // Show typing indicator
+                    this.isTyping = true;
+                    
+                    // Simulate AI thinking time
+                    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+                    
+                    // Generate response
+                    const response = this.generateResponse(userInput);
+                    
+                    const botMessage = {
+                        id: ++this.messageId,
+                        type: 'bot',
+                        text: response
+                    };
+
+                    this.isTyping = false;
+                    this.messages.push(botMessage);
+                    this.scrollToBottom();
+                },
+
+                generateResponse(input) {
+                    // Check for keywords and return appropriate response
+                    if (input.includes('housing') || input.includes('accommodation') || input.includes('apartment')) {
+                        return this.responses.housing;
+                    } else if (input.includes('buddy') || input.includes('friend') || input.includes('local')) {
+                        return this.responses.buddy;
+                    } else if (input.includes('visa') || input.includes('document') || input.includes('permit')) {
+                        return this.responses.visa;
+                    } else if (input.includes('university') || input.includes('college') || input.includes('school')) {
+                        return this.responses.universities;
+                    } else if (input.includes('cost') || input.includes('price') || input.includes('money') || input.includes('budget')) {
+                        return this.responses.cost;
+                    } else if (input.includes('language') || input.includes('arabic') || input.includes('french')) {
+                        return this.responses.language;
+                    } else if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                        return 'Hello! 😊 How can I help you with your Morocco student journey today?';
+                    } else if (input.includes('thank') || input.includes('thanks')) {
+                        return 'You\'re welcome! I\'m here whenever you need help. Feel free to ask about housing, visas, or anything else! 🌟';
+                    } else {
+                        return this.responses.default;
+                    }
+                },
+
+                scrollToBottom() {
+                    this.$nextTick(() => {
+                    const container = this.$refs.messagesContainer;
+                    container.scrollTop = container.scrollHeight;
+                    });
+                }
+            }
+        }
+    </script>
 </body>
 </html>
