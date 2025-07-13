@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="smooth-scroll">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Verified Housing - Ahlane</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Alpine.js for simple interactions -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root {
+            --cream: #FFFFFF;
+            --light-blue: #3B82F6;
+            --medium-blue: #1D4ED8;
+            --dark-blue: #1E40AF;
+            --primary-500: #3B82F6;
+            --primary-600: #2563EB;
+            --primary-700: #1D4ED8;
+            --accent-500: #8B5CF6;
+            --accent-600: #7C3AED;
+            --surface-100: rgba(59, 130, 246, 0.08);
+            --surface-200: rgba(59, 130, 246, 0.12);
+            --surface-300: rgba(59, 130, 246, 0.16);
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .gradient-mesh {
+            background: 
+                radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at top right, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom left, rgba(16, 185, 129, 0.2) 0%, transparent 60%),
+                linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9), 
+                rgba(59, 130, 246, 0.1)
+            );
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(59, 130, 246, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(59, 130, 246, 0.1);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card-hover:hover {
+            background: var(--surface-300);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(99, 102, 241, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-neo {
+            background: linear-gradient(135deg, var(--medium-blue), var(--dark-blue));
+            box-shadow: 
+                0 4px 15px rgba(116, 155, 194, 0.4),
+                inset 0 1px 0 rgba(255, 251, 222, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-neo:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(99, 102, 241, 0.6),
+                0 0 20px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #10B981);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8), 0 0 60px rgba(139, 92, 246, 0.4); }
+        }
+
+        .morphing-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 70% 60% 40% / 30% 60% 40% 70%; }
+            50% { border-radius: 70% 30% 40% 60% / 70% 40% 60% 30%; }
+            75% { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+        }
+
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav x-data="{ mobileMenuOpen: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 50)"
+         class="fixed w-full z-50 transition-all duration-500"
+         :class="{ 'glass-card': scrolled, 'bg-transparent': !scrolled }">
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center morphing-blob">
+                            <span class="text-white font-bold text-lg">A</span>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">Ahlane</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 text-sm font-medium text-blue-800 hover:text-blue-900 rounded-lg hover:bg-blue-100/50 transition-all duration-300">Home</a>
+                    <a href="housing.html" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg">Housing</a>
+                    <a href="buddy.html" class="px-4 py-2 text-sm font-medium text-blue-800 hover:text-blue-900 rounded-lg hover:bg-blue-100/50 transition-all duration-300">Buddy Program</a>
+                    <a href="papers.html" class="px-4 py-2 text-sm font-medium text-blue-800 hover:text-blue-900 rounded-lg hover:bg-blue-100/50 transition-all duration-300">Documents</a>
+                    <a href="cultural.html" class="px-4 py-2 text-sm font-medium text-blue-800 hover:text-blue-900 rounded-lg hover:bg-blue-100/50 transition-all duration-300">Cultural</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="btn-neo px-6 py-2.5 text-sm font-semibold text-white rounded-xl">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                        class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center gradient-mesh overflow-hidden">
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-32">
+            <div class="text-center">
+                <div class="mb-6">
+                    <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium glass-card text-blue-300 border border-blue-500/20">
+                        <span class="w-2 h-2 bg-green-400 rounded-full mr-2 pulse-glow"></span>
+                        500+ Verified Properties
+                    </span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
+                    <span class="block text-white">AI-Verified</span>
+                    <span class="block gradient-text">Housing</span>
+                    <span class="block text-gray-300">Made Simple</span>
+                </h1>
+                
+                <p class="text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+                    Find your perfect home in Morocco with our AI-powered matching system. Safe, verified, and tailored to your student budget.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="btn-neo px-8 py-4 text-white font-semibold rounded-xl flex items-center justify-center space-x-2">
+                        <span>Browse Housing</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gradient-to-b from-transparent to-gray-900/50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    How Our <span class="gradient-text">AI Housing</span> Works
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Our smart algorithm considers your preferences, budget, and university location to find your perfect match.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        1
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Tell Us Your Needs</h3>
+                    <p class="text-gray-400 text-sm">Budget, location preferences, roommate status, and amenities</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        2
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">AI Matching</h3>
+                    <p class="text-gray-400 text-sm">Our algorithm finds the best verified properties for you</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-red-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        3
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Virtual Tours</h3>
+                    <p class="text-gray-400 text-sm">3D tours and verified photos of your matched properties</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        4
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Secure Booking</h3>
+                    <p class="text-gray-400 text-sm">Protected payments and verified landlord contracts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Housing Types Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Housing <span class="gradient-text">Options</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    From budget-friendly shared apartments to premium studio flats, we have options for every student.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card glass-card-hover rounded-3xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Shared Apartments" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Shared Apartments</h3>
+                        <p class="text-gray-400 mb-4">Perfect for social students who want to share costs and make friends.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-blue-400">2000-4000 MAD</span>
+                            <span class="text-sm text-gray-400">per month</span>
+                        </div>
+                        <ul class="mt-4 space-y-2 text-sm text-gray-400">
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Shared kitchen & living area
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                WiFi & utilities included
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Near university transport
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Private Studios" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Private Studios</h3>
+                        <p class="text-gray-400 mb-4">Complete privacy with your own kitchen, bathroom, and living space.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-purple-400">4000-7000 MAD</span>
+                            <span class="text-sm text-gray-400">per month</span>
+                        </div>
+                        <ul class="mt-4 space-y-2 text-sm text-gray-400">
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Private kitchen & bathroom
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Furnished & ready to move
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                24/7 building security
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Student Residences" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Student Residences</h3>
+                        <p class="text-gray-400 mb-4">Purpose-built student accommodation with study facilities and community.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-green-400">3000-6000 MAD</span>
+                            <span class="text-sm text-gray-400">per month</span>
+                        </div>
+                        <ul class="mt-4 space-y-2 text-sm text-gray-400">
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Study rooms & common areas
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                International student community
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Gym & recreational facilities
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Features -->
+    <section class="py-20 bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Your <span class="gradient-text">Safety</span> is Our Priority
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Every property is thoroughly verified with multiple safety checks and landlord background verification.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Verified Landlords</h3>
+                    <p class="text-gray-400 text-sm">Background checked property owners</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Photo Verification</h3>
+                    <p class="text-gray-400 text-sm">Real photos, no fake listings</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Location Safety</h3>
+                    <p class="text-gray-400 text-sm">Safe neighborhoods only</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">24/7 Support</h3>
+                    <p class="text-gray-400 text-sm">Always here to help</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-mesh relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
+        <div class="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-8">
+                Ready to Find Your 
+                <span class="gradient-text">Perfect Home?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of students who found their ideal accommodation through our AI-powered platform.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button class="btn-neo px-10 py-4 text-lg font-semibold text-white rounded-xl flex items-center space-x-3">
+                    <span>Browse Available Housing</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center morphing-blob">
+                            <span class="text-white font-bold">A</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold gradient-text">Ahlane</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Your trusted partner for an exceptional international student experience in Morocco.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Home</a></li>
+                        <li><a href="buddy.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Buddy Program</a></li>
+                        <li><a href="papers.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Documents</a></li>
+                        <li><a href="cultural.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Cultural Integration</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Housing Types</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-gray-400 text-sm">Shared Apartments</span></li>
+                        <li><span class="text-gray-400 text-sm">Private Studios</span></li>
+                        <li><span class="text-gray-400 text-sm">Student Residences</span></li>
+                        <li><span class="text-gray-400 text-sm">Homestays</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Support</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-gray-400 text-sm">24/7 Help Center</span></li>
+                        <li><span class="text-gray-400 text-sm">Safety Guidelines</span></li>
+                        <li><span class="text-gray-400 text-sm">Property Verification</span></li>
+                        <li><span class="text-gray-400 text-sm">Landlord Support</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-700/50 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2025 Ahlane. All rights reserved. Safe housing for international students in Morocco.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

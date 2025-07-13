@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" class="smooth-scroll">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy Program - Ahlane</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Alpine.js for simple interactions -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root {
+            --cream: #FFFFFF;
+            --light-blue: #3B82F6;
+            --medium-blue: #1D4ED8;
+            --dark-blue: #1E40AF;
+            --primary-500: #3B82F6;
+            --primary-600: #2563EB;
+            --primary-700: #1D4ED8;
+            --accent-500: #8B5CF6;
+            --accent-600: #7C3AED;
+            --gold-500: #3B82F6;
+            --gold-600: #1D4ED8;
+            --terracotta-500: #1E40AF;
+            --terracotta-600: #1D4ED8;
+            --surface-100: rgba(59, 130, 246, 0.08);
+            --surface-200: rgba(59, 130, 246, 0.12);
+            --surface-300: rgba(59, 130, 246, 0.16);
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .gradient-mesh {
+            background: 
+                radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at top right, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom left, rgba(16, 185, 129, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%),
+                linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 30%, #E2E8F0 70%, #F8FAFC 100%);
+        }
+
+        .moroccan-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(217, 119, 6, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 48%, rgba(245, 158, 11, 0.05) 50%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(217, 119, 6, 0.05) 50%, transparent 52%);
+            background-size: 40px 40px, 60px 60px, 20px 20px, 20px 20px;
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9), 
+                rgba(59, 130, 246, 0.1),
+                rgba(139, 92, 246, 0.05)
+            );
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(59, 130, 246, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(59, 130, 246, 0.1);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card-hover:hover {
+            background: linear-gradient(135deg, 
+                rgba(217, 119, 6, 0.25), 
+                rgba(245, 158, 11, 0.15),
+                rgba(220, 38, 38, 0.1)
+            );
+            transform: translateY(-8px);
+            box-shadow: 
+                0 25px 50px rgba(217, 119, 6, 0.3),
+                0 0 0 1px rgba(245, 158, 11, 0.4),
+                inset 0 1px 0 rgba(245, 158, 11, 0.2);
+        }
+
+        .btn-neo {
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            box-shadow: 
+                0 4px 15px rgba(217, 119, 6, 0.4),
+                inset 0 1px 0 rgba(245, 158, 11, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-neo:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(217, 119, 6, 0.6),
+                0 0 20px rgba(220, 38, 38, 0.4),
+                inset 0 1px 0 rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #10B981, #3B82F6);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(217, 119, 6, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(217, 119, 6, 0.8), 0 0 60px rgba(245, 158, 11, 0.6); }
+        }
+
+        .morphing-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+            background: linear-gradient(135deg, var(--primary-600), var(--gold-600));
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 70% 60% 40% / 30% 60% 40% 70%; }
+            50% { border-radius: 70% 30% 40% 60% / 70% 40% 60% 30%; }
+            75% { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+        }
+
+        .moroccan-accent {
+            background: linear-gradient(45deg, transparent 40%, rgba(217, 119, 6, 0.1) 50%, transparent 60%);
+        }
+
+        .star-pattern::before {
+            content: '✦';
+            color: rgba(245, 158, 11, 0.3);
+            position: absolute;
+            font-size: 2rem;
+            top: -10px;
+            right: -10px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav x-data="{ mobileMenuOpen: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 50)"
+         class="fixed w-full z-50 transition-all duration-500"
+         :class="{ 'glass-card': scrolled, 'bg-transparent': !scrolled }">
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 morphing-blob flex items-center justify-center relative">
+                            <span class="text-white font-bold text-lg">A</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 rounded-full blur-lg"></div>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">Ahlane</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 text-sm font-medium text-amber-200 hover:text-white rounded-lg hover:bg-orange-500/10 transition-all duration-300">Home</a>
+                    <a href="housing.html" class="px-4 py-2 text-sm font-medium text-amber-200 hover:text-white rounded-lg hover:bg-orange-500/10 transition-all duration-300">Housing</a>
+                    <a href="buddy.html" class="px-4 py-2 text-sm font-medium text-orange-400 bg-orange-500/15 rounded-lg border border-orange-500/30 star-pattern relative">Buddy Program</a>
+                    <a href="papers.html" class="px-4 py-2 text-sm font-medium text-amber-200 hover:text-white rounded-lg hover:bg-orange-500/10 transition-all duration-300">Documents</a>
+                    <a href="cultural.html" class="px-4 py-2 text-sm font-medium text-amber-200 hover:text-white rounded-lg hover:bg-orange-500/10 transition-all duration-300">Cultural</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="btn-neo px-6 py-2.5 text-sm font-semibold text-white rounded-xl">
+                        Find My Buddy
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                        class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center gradient-mesh moroccan-pattern overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-900/20 via-transparent to-red-900/20"></div>
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-32">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="mb-6">
+                        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium glass-card text-orange-300 border border-orange-500/25">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mr-2 pulse-glow"></span>
+                            2,500+ Successful Matches
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
+                        <span class="block text-amber-100">Smart</span>
+                        <span class="block gradient-text">Buddy</span>
+                        <span class="block text-orange-200">System</span>
+                    </h1>
+                    
+                    <p class="text-xl text-amber-200/80 mb-10 leading-relaxed">
+                        Connect with local Moroccan students through our AI-powered personality matching. Build lasting friendships and get authentic cultural insights from the heart of Morocco.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="btn-neo px-8 py-4 text-white font-semibold rounded-xl flex items-center justify-center space-x-2">
+                            <span>Find My Buddy</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="glass-card rounded-2xl p-2 pulse-glow">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Students connecting" 
+                             class="rounded-2xl w-full h-auto object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Matching Works -->
+    <section class="py-20 bg-gradient-to-b from-transparent to-gray-900/50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-amber-100 mb-6">
+                    How Our <span class="gradient-text">AI Matching</span> Works
+                </h2>
+                <p class="text-xl text-amber-200/80 max-w-3xl mx-auto">
+                    Our advanced algorithm considers personality traits, interests, study fields, and cultural backgrounds to create perfect matches rooted in Moroccan values of friendship and hospitality.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="glass-card rounded-3xl p-6 text-center moroccan-accent relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-orange-500/20 to-transparent rounded-bl-3xl"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        1
+                    </div>
+                    <h3 class="text-lg font-bold text-amber-100 mb-2">Personality Quiz</h3>
+                    <p class="text-amber-200/70 text-sm">Complete our comprehensive personality and interests assessment inspired by Moroccan hospitality values</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center moroccan-accent relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-yellow-500/20 to-transparent rounded-bl-3xl"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        2
+                    </div>
+                    <h3 class="text-lg font-bold text-amber-100 mb-2">AI Analysis</h3>
+                    <p class="text-amber-200/70 text-sm">Our AI analyzes compatibility across multiple dimensions including cultural interests and lifestyle preferences</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center moroccan-accent relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-green-500/20 to-transparent rounded-bl-3xl"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-teal-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        3
+                    </div>
+                    <h3 class="text-lg font-bold text-amber-100 mb-2">Perfect Matches</h3>
+                    <p class="text-amber-200/70 text-sm">Get 3-5 highly compatible local student matches from universities across Morocco</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 text-center moroccan-accent relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-red-500/20 to-transparent rounded-bl-3xl"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-600 to-pink-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        4
+                    </div>
+                    <h3 class="text-lg font-bold text-amber-100 mb-2">Connect & Meet</h3>
+                    <p class="text-amber-200/70 text-sm">Safe video calls and organized meetups in traditional Moroccan venues to build lasting friendships</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-amber-100 mb-6">
+                    Why You Need a <span class="gradient-text">Local Buddy</span>
+                </h2>
+                <p class="text-xl text-amber-200/80 max-w-3xl mx-auto">
+                    Having a local friend makes all the difference in your study abroad experience. Discover the warmth of Moroccan friendship and hospitality.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card glass-card-hover rounded-3xl p-8 star-pattern relative">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-100 mb-4">Cultural Insights</h3>
+                    <p class="text-amber-200/70 leading-relaxed">
+                        Learn about Moroccan customs, traditions, and social norms from someone who knows them inside out. Discover the rich heritage of the Maghreb.
+                    </p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 star-pattern relative">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-100 mb-4">Language Practice</h3>
+                    <p class="text-amber-200/70 leading-relaxed">
+                        Improve your Arabic, French, or Berber with a patient native speaker who understands your learning journey and Moroccan linguistic diversity.
+                    </p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 star-pattern relative">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-100 mb-4">Local Navigation</h3>
+                    <p class="text-amber-200/70 leading-relaxed">
+                        Discover hidden gems, best local restaurants, and navigate medinas like a local with insider knowledge from Casablanca to Marrakech.
+                    </p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 star-pattern relative">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-100 mb-4">Social Network</h3>
+                    <p class="text-amber-200/70 leading-relaxed">
+                        Get introduced to their friend groups and build a wider social circle for a richer experience rooted in Moroccan community values.
+                    </p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 star-pattern relative">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-100 mb-4">Emotional Support</h3>
+                    <p class="text-amber-200/70 leading-relaxed">
+                        Have someone who understands the challenges of adapting to a new culture and can provide genuine support with Moroccan warmth.
+                    </p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 star-pattern relative">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-100 mb-4">Academic Help</h3>
+                    <p class="text-amber-200/70 leading-relaxed">
+                        Get insights into academic culture, study tips, and navigation of Moroccan university systems from experienced local students.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="py-20 bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-amber-100 mb-6">
+                    <span class="gradient-text">Friendship</span> Success Stories
+                </h2>
+                <p class="text-xl text-amber-200/80 max-w-3xl mx-auto">
+                    Real stories from international students who found their perfect buddy match and experienced the warmth of Moroccan friendship.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card rounded-3xl p-6 border border-orange-500/20">
+                    <div class="flex items-center mb-4">
+                        <img class="w-12 h-12 rounded-full object-cover border-2 border-orange-500" src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-amber-100">Sarah & Fatima</h4>
+                            <p class="text-sm text-orange-400">France ↔ Morocco</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-amber-200/80 mb-4 leading-relaxed text-sm">
+                        "Fatima became my sister in Morocco! She taught me Arabic, showed me the best tagine places, and I even spent Eid with her family. Best part of my exchange!"
+                    </blockquote>
+                    <div class="text-xs text-amber-300/60">🧡 Friends for 2 years</div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 border border-yellow-500/20">
+                    <div class="flex items-center mb-4">
+                        <img class="w-12 h-12 rounded-full object-cover border-2 border-yellow-500" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Daniel">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-amber-100">Daniel & Youssef</h4>
+                            <p class="text-sm text-yellow-400">Senegal ↔ Morocco</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-amber-200/80 mb-4 leading-relaxed text-sm">
+                        "Youssef and I started as study buddies and ended up traveling all over Morocco together. He made my engineering studies so much easier to navigate!"
+                    </blockquote>
+                    <div class="text-xs text-amber-300/60">� Study partners & travel buddies</div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 border border-red-500/20">
+                    <div class="flex items-center mb-4">
+                        <img class="w-12 h-12 rounded-full object-cover border-2 border-red-500" src="https://randomuser.me/api/portraits/women/56.jpg" alt="Lin">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-amber-100">Lin & Aicha</h4>
+                            <p class="text-sm text-red-400">China ↔ Morocco</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-amber-200/80 mb-4 leading-relaxed text-sm">
+                        "Aicha helped me with everything from opening a bank account to understanding Moroccan humor. We're planning to visit each other's countries!"
+                    </blockquote>
+                    <div class="text-xs text-amber-300/60">❤️ Cultural exchange champions</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buddy Types -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Choose Your <span class="gradient-text">Buddy Type</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Different types of connections for different needs and personalities.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Study Buddy</h3>
+                    <p class="text-gray-400 text-sm">Academic support and study group partner</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Cultural Guide</h3>
+                    <p class="text-gray-400 text-sm">Deep cultural immersion and local experiences</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Language Partner</h3>
+                    <p class="text-gray-400 text-sm">Arabic, French, or Berber language exchange</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Social Companion</h3>
+                    <p class="text-gray-400 text-sm">Fun activities and expanding social circles</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-mesh moroccan-pattern relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/30 via-red-600/20 to-yellow-600/30"></div>
+        <div class="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-black text-amber-100 mb-8">
+                Ready to Meet Your 
+                <span class="gradient-text">Perfect Buddy?</span>
+            </h2>
+            <p class="text-xl text-amber-200/90 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of international students who found lifelong friendships through our smart matching system rooted in Moroccan hospitality.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button class="btn-neo px-10 py-4 text-lg font-semibold text-white rounded-xl flex items-center space-x-3 shadow-2xl">
+                    <span>Start Buddy Matching</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-b from-orange-950/50 to-red-950/80 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 morphing-blob flex items-center justify-center">
+                            <span class="text-white font-bold">A</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold gradient-text">Ahlane</h3>
+                    </div>
+                    <p class="text-amber-200/70 text-sm mb-4">Connecting international students with local buddies for authentic Moroccan experiences and lasting friendships.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-amber-100 text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-amber-200/70 hover:text-orange-400 text-sm transition-colors">Home</a></li>
+                        <li><a href="housing.html" class="text-amber-200/70 hover:text-orange-400 text-sm transition-colors">Housing</a></li>
+                        <li><a href="papers.html" class="text-amber-200/70 hover:text-orange-400 text-sm transition-colors">Documents</a></li>
+                        <li><a href="cultural.html" class="text-amber-200/70 hover:text-orange-400 text-sm transition-colors">Cultural Integration</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-amber-100 text-lg mb-4">Buddy Types</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-amber-200/70 text-sm">Study Partners</span></li>
+                        <li><span class="text-amber-200/70 text-sm">Cultural Guides</span></li>
+                        <li><span class="text-amber-200/70 text-sm">Language Exchange</span></li>
+                        <li><span class="text-amber-200/70 text-sm">Social Companions</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-amber-100 text-lg mb-4">Safety & Support</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-amber-200/70 text-sm">Verified Students</span></li>
+                        <li><span class="text-amber-200/70 text-sm">Safe Meetups</span></li>
+                        <li><span class="text-amber-200/70 text-sm">24/7 Support</span></li>
+                        <li><span class="text-amber-200/70 text-sm">Community Guidelines</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-orange-700/30 text-center">
+                <p class="text-amber-300/60 text-sm">&copy; 2025 Ahlane. All rights reserved. Building bridges between cultures through the warmth of Moroccan friendship.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

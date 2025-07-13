@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" class="smooth-scroll">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Integration - Ahlane</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Alpine.js for simple interactions -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root {
+            --cream: #FFFFFF;
+            --light-blue: #3B82F6;
+            --medium-blue: #1D4ED8;
+            --dark-blue: #1E40AF;
+            --primary-500: #3B82F6;
+            --primary-600: #2563EB;
+            --primary-700: #1D4ED8;
+            --accent-500: #8B5CF6;
+            --accent-600: #7C3AED;
+            --surface-100: rgba(59, 130, 246, 0.08);
+            --surface-200: rgba(59, 130, 246, 0.12);
+            --surface-300: rgba(59, 130, 246, 0.16);
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .gradient-mesh {
+            background: 
+                radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at top right, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom left, rgba(16, 185, 129, 0.2) 0%, transparent 60%),
+                linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9), 
+                rgba(59, 130, 246, 0.1)
+            );
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(59, 130, 246, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(59, 130, 246, 0.1);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card-hover:hover {
+            background: var(--surface-300);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(99, 102, 241, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-neo {
+            background: linear-gradient(135deg, var(--primary-600), var(--accent-600));
+            box-shadow: 
+                0 4px 15px rgba(59, 130, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-neo:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(99, 102, 241, 0.6),
+                0 0 20px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #91C8E4, #749BC2, #4682A9);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8), 0 0 60px rgba(139, 92, 246, 0.4); }
+        }
+
+        .morphing-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 70% 60% 40% / 30% 60% 40% 70%; }
+            50% { border-radius: 70% 30% 40% 60% / 70% 40% 60% 30%; }
+            75% { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+        }
+
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav x-data="{ mobileMenuOpen: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 50)"
+         class="fixed w-full z-50 transition-all duration-500"
+         :class="{ 'glass-card': scrolled, 'bg-transparent': !scrolled }">
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center morphing-blob">
+                            <span class="text-white font-bold text-lg">A</span>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">Ahlane</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-300">Home</a>
+                    <a href="housing.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-300">Housing</a>
+                    <a href="buddy.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-300">Buddy Program</a>
+                    <a href="papers.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-300">Documents</a>
+                    <a href="cultural.html" class="px-4 py-2 text-sm font-medium text-orange-400 bg-orange-500/10 rounded-lg border border-orange-500/20">Cultural</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="btn-neo px-6 py-2.5 text-sm font-semibold text-white rounded-xl">
+                        Start Journey
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                        class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center gradient-mesh overflow-hidden">
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-32">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="mb-6">
+                        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium glass-card text-orange-300 border border-orange-500/20">
+                            <span class="w-2 h-2 bg-orange-400 rounded-full mr-2 pulse-glow"></span>
+                            Rich Cultural Programs
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
+                        <span class="block text-white">Cultural</span>
+                        <span class="block gradient-text">Integration</span>
+                        <span class="block text-gray-300">Experience</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-400 mb-10 leading-relaxed">
+                        Immerse yourself in authentic Moroccan culture through guided experiences, language exchange, and community connections that transform you into a cultural insider.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="btn-neo px-8 py-4 text-white font-semibold rounded-xl flex items-center justify-center space-x-2">
+                            <span>Explore Culture</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="glass-card rounded-2xl p-2 pulse-glow">
+                        <img src="https://images.unsplash.com/photo-1539650116574-75c0c6d73a0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Moroccan culture" 
+                             class="rounded-2xl w-full h-auto object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Programs -->
+    <section class="py-20 bg-gradient-to-b from-transparent to-gray-900/50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Our <span class="gradient-text">Cultural Programs</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Carefully curated experiences designed to help you understand and appreciate Moroccan culture deeply.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card glass-card-hover rounded-3xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mb-6 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Language Exchange</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Master Arabic, French, or Berber with native speakers through structured conversation practice and cultural context learning.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-orange-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Weekly conversation sessions
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-orange-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Cultural context lessons
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-orange-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Personalized learning plans
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl mb-6 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Traditional Workshops</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Learn traditional Moroccan crafts, cooking, and arts from master artisans in authentic settings.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Tagine cooking classes
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Pottery and ceramics
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Carpet weaving
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-teal-600 rounded-2xl mb-6 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Cultural Tours</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Explore Morocco's historical sites, markets, and hidden gems with knowledgeable local guides who share insider stories.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Medina walking tours
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Desert experiences
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Atlas Mountains trips
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl mb-6 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Family Integration</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Experience authentic Moroccan family life through carefully matched host families and community connections.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Host family programs
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Traditional celebrations
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Community events
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-6 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Music & Dance</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Learn traditional Moroccan music and dance forms through interactive workshops with professional artists.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-indigo-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Gnawa music sessions
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-indigo-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Traditional dance classes
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-indigo-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Instrument workshops
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl mb-6 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Literature & Stories</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Discover Moroccan literature, folklore, and storytelling traditions that have shaped the cultural landscape.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Book discussion circles
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Storytelling workshops
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Poetry sessions
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Calendar -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Monthly <span class="gradient-text">Cultural Calendar</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Year-round cultural activities and celebrations to keep you connected with Moroccan traditions.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🌙</div>
+                        <h3 class="font-bold text-white mb-2">Ramadan Experience</h3>
+                        <p class="text-gray-400 text-sm mb-3">Understand and participate in this sacred month</p>
+                        <span class="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded-full">March-April</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🎭</div>
+                        <h3 class="font-bold text-white mb-2">Festival Season</h3>
+                        <p class="text-gray-400 text-sm mb-3">Music, film, and arts festivals across Morocco</p>
+                        <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full">May-August</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🍂</div>
+                        <h3 class="font-bold text-white mb-2">Harvest Traditions</h3>
+                        <p class="text-gray-400 text-sm mb-3">Participate in traditional harvest celebrations</p>
+                        <span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full">September-October</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🎉</div>
+                        <h3 class="font-bold text-white mb-2">New Year Celebrations</h3>
+                        <p class="text-gray-400 text-sm mb-3">Both Amazigh and Gregorian new year traditions</p>
+                        <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">January</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Immersion Levels -->
+    <section class="py-20 bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Choose Your <span class="gradient-text">Immersion Level</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Customize your cultural journey based on your interests, time availability, and learning goals.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card glass-card-hover rounded-3xl p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Explorer</h3>
+                    <p class="text-gray-400 mb-6">Basic cultural activities and events</p>
+                    <ul class="space-y-2 text-sm text-gray-400 mb-8">
+                        <li>• Monthly cultural tours</li>
+                        <li>• Language exchange sessions</li>
+                        <li>• Festival participation</li>
+                        <li>• Basic cooking classes</li>
+                    </ul>
+                    <div class="text-2xl font-bold text-blue-400 mb-2">2-4 hours/week</div>
+                    <div class="text-sm text-gray-400">Perfect for busy students</div>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 text-center border-2 border-purple-500/30">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Immersive</h3>
+                    <p class="text-gray-400 mb-6">Deep cultural engagement and learning</p>
+                    <div class="inline-block bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs mb-4">Most Popular</div>
+                    <ul class="space-y-2 text-sm text-gray-400 mb-8">
+                        <li>• All Explorer activities</li>
+                        <li>• Weekly workshop sessions</li>
+                        <li>• Host family connections</li>
+                        <li>• Traditional craft learning</li>
+                        <li>• Cultural mentorship</li>
+                    </ul>
+                    <div class="text-2xl font-bold text-purple-400 mb-2">6-8 hours/week</div>
+                    <div class="text-sm text-gray-400">Recommended for full experience</div>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-3xl p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Ambassador</h3>
+                    <p class="text-gray-400 mb-6">Total cultural transformation</p>
+                    <ul class="space-y-2 text-sm text-gray-400 mb-8">
+                        <li>• All previous activities</li>
+                        <li>• Personal cultural mentor</li>
+                        <li>• Advanced language training</li>
+                        <li>• Community leadership roles</li>
+                        <li>• Cultural project creation</li>
+                        <li>• Regional exploration trips</li>
+                    </ul>
+                    <div class="text-2xl font-bold text-orange-400 mb-2">10+ hours/week</div>
+                    <div class="text-sm text-gray-400">For cultural enthusiasts</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Metrics -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-6">
+                    Cultural <span class="gradient-text">Impact</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Real results from students who embraced Moroccan culture through our programs.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-bold text-orange-400 mb-2">95%</div>
+                    <div class="text-sm text-gray-400">Feel culturally confident</div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-bold text-purple-400 mb-2">87%</div>
+                    <div class="text-sm text-gray-400">Made local friends</div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-bold text-blue-400 mb-2">92%</div>
+                    <div class="text-sm text-gray-400">Improved language skills</div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl font-bold text-green-400 mb-2">89%</div>
+                    <div class="text-sm text-gray-400">Want to return to Morocco</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-mesh relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20"></div>
+        <div class="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-8">
+                Ready to Embrace
+                <span class="gradient-text">Moroccan Culture?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Start your cultural journey today and discover the rich heritage, warm hospitality, and vibrant traditions of Morocco.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button class="btn-neo px-10 py-4 text-lg font-semibold text-white rounded-xl flex items-center space-x-3">
+                    <span>Begin Cultural Journey</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center morphing-blob">
+                            <span class="text-white font-bold">A</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold gradient-text">Ahlane</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Authentic cultural experiences for international students in Morocco.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Cultural Programs</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-gray-400 text-sm">Language Exchange</span></li>
+                        <li><span class="text-gray-400 text-sm">Traditional Workshops</span></li>
+                        <li><span class="text-gray-400 text-sm">Cultural Tours</span></li>
+                        <li><span class="text-gray-400 text-sm">Family Integration</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="housing.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Housing</a></li>
+                        <li><a href="buddy.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Buddy Program</a></li>
+                        <li><a href="papers.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Documents</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-indigo-400 text-sm transition-colors">Home</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Immersion Levels</h4>
+                    <ul class="space-y-3">
+                        <li><span class="text-gray-400 text-sm">Explorer Program</span></li>
+                        <li><span class="text-gray-400 text-sm">Immersive Experience</span></li>
+                        <li><span class="text-gray-400 text-sm">Ambassador Journey</span></li>
+                        <li><span class="text-gray-400 text-sm">Custom Programs</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-700/50 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2025 Ahlane. All rights reserved. Celebrating and sharing Moroccan culture with the world.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
